@@ -31,7 +31,7 @@
 													<label>Quantity Left : </label> <span>{{$productdetail->quantity}}</span>
 												</div>
 												<div class="info-price info-price-detail">
-													<label>Price:</label> <span>{{$productdetail->price}}Ks</span>
+													<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span>
 												</div>
 												<div class="attr-info">
 													<a class="addcart-link" href="{!! url('user/orderform/'.$productdetail->id)!!}"><i class="fa fa-shopping-cart"></i> Order</a>

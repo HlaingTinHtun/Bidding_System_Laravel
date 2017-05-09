@@ -21,7 +21,6 @@ class CategoryTableSeeder extends Seeder
      	foreach ($items as $item) {
 	        $category = new Category;
 	        $category->name = $item;
-	        $category->weight = $faker->numberBetween(1,10);
 	        $category->save();
         }
 

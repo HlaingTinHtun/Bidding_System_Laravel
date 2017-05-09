@@ -16,17 +16,15 @@ class CreateProductsTable extends Migration
              $table->increments('id');
              $table->string('name');
              $table->longtext('descr');
-             $table->decimal('price',10,2);
-             $table->integer('quantity');
+             $table->decimal('initialprice',10,2);
+             $table->date('end_date');
              $table->string('image_url');
-             $table->text('hashtag');
-             $table->text('custom_field');
+             $table->integer('buyer_id');
+             $table->integer('successful_bid_id');
              $table->string('slug')->unique();
              $table->integer('cat_id')->unsigned();
              $table->foreign('cat_id')->references('id')->on('product_category')->onDelete('cascade');
 
-             $table->integer('dealer_id')->unsigned();
-             $table->foreign('dealer_id')->references('id')->on('dealers')->onDelete('cascade');
              $table->timestamps();
         });
     }

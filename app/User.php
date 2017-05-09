@@ -27,14 +27,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function whichRole()
+    public function bidder()
     {
-        return $this->roleName[$this->role];
+        return $this->belongsTo('App\Bid');
     }
 
-    public function Wishlist()
+    public function hasBidsOnProducts()
     {
-        return $this->hasMany('App\WishList');
+        return $this->belongsTo('App\Product');
     }
-
 }

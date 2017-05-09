@@ -1,0 +1,48 @@
+/*----------------------------------
+[Master Stylesheet]
+
+Project: Super Shop
+Version: 1.1
+Last change: 01/03/2016
+Author:	7UP Theme
+Author URI: https://7uptheme.com/
+-----------------------------------*/
+.logout{
+	border: 1px solid #ccc;
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 68px;
+    position: relative;
+    text-transform: uppercase;
+}
+.btnorder{
+    background: #fe9c00 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    height: 40px;
+    padding: 0 25px;
+    text-transform: capitalize;
+    float: right;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: orange;
+    border-color: orange;
+}
+.pagination > li > a, .pagination > li > span{
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: orange;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}

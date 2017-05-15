@@ -12,9 +12,19 @@
 */
 use App\Task;
 
-Route::get('/', function () {
-    return redirect('home');
+use App\Events\UserHasRegistered;
+
+Route::get('/',function(){
+    return view('welcome');
 });
+
+Route::get('broadcast', function() {
+    $name = 'hellojc';
+    event(new UserHasRegistered($name));
+
+    return 'Done';
+});
+
 
 Route::get('/hello', function (Task $task) {
     return $task->get();

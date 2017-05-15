@@ -12,5 +12,6 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('orderform/{id}', 'Customer\CustomerController@orderForm');
         Route::post('postorder/{id}', 'Customer\CustomerController@postOrder');
         Route::get('myaccount', 'Customer\CustomerController@account');
+        Route::post('postbid/{id}', 'BidController@postBid');
     });
 });

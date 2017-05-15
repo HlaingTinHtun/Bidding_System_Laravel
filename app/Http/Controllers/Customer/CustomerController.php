@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Category;
+use App\Events\UserHasRegistered;
 use App\Http\Requests\OrderFormRequest;
 use App\Order;
 use App\Orderdetail;
 use App\Product;
+use App\User;
 use App\WishList;
 use Illuminate\Http\Request;
 
@@ -48,12 +50,17 @@ class CustomerController extends Controller
         return view('customers.auth');
     }
 
-    public function itemDetail($slug)
+    public function itemDetail($slug,Request $request)
     {
 
         $productdetail = Product::find(Product::whereSlug($slug)->firstOrFail()->id);
         $relatedpros = Product::where('cat_id',$productdetail->cat_id)->paginate(5);
-        return view('customers.detail',compact('productdetail','relatedpros'));
+
+        $bidderid = $productdetail->buyer_id;
+
+        $bidder = User::find($bidderid)->name;
+
+        return view('customers.detail',compact('productdetail','relatedpros','bidder'));
     }
 
     public function addToWishList(Request $request)

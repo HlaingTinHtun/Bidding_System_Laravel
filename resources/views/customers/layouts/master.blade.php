@@ -18,6 +18,10 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/theme.css" media="all"/>
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css" media="all"/>
     <link rel="stylesheet" type="text/css" href="/assets/style.css" media="all"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.9/vue.min.js"></script>
 </head>
 <body>
 <div class="wrap">

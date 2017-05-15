@@ -1,5 +1,26 @@
 @extends('customers.layouts.master')
 @section('content')
+	<script>
+		(function(){
+			var pusher = new Pusher('02c5b12fd179bf67953d', {
+				encrypted: true
+			});
+
+			var channel = pusher.subscribe('test');
+
+			channel.bind('App\\Events\\UserHasRegistered', function(data) {
+				if(window.location.href == data.route){
+					swal({title: "Hay", text: data.name+' Has Placed Bid ($ '+data.bidAmount+')'},
+							function(){
+								window.location.reload(true);
+							}
+					);
+				}else{
+					//Do Nth
+				}
+			});
+		})();
+	</script>
 	<div id="content">
 		<div class="content-shop left-sidebar">
 			<div class="container">
@@ -7,9 +28,9 @@
 					<div class="col-md-9 col-sm-8 col-xs-12 main-content">
 						<div class="main-content-shop">
 								<div class="main-detail">
-									@if(session()->has('successmessage'))
+									@if(session()->has('bidsuccess'))
 										<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button>
-											<strong>Success!</strong>{{ session()->get('successmessage') }}
+											<strong>Success ! </strong>{{ session()->get('bidsuccess') }}
 										</div>
 									@endif
 									<div class="row">
@@ -22,6 +43,16 @@
 											<!-- End Gallery -->
 										</div>
 										<div class="col-md-7 col-sm-12 col-xs-12">
+											@if(session()->has('fake_error'))
+												<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
+													<strong>Opps ! </strong>{{ session()->get('fake_error') }}
+												</div>
+											@endif
+											@if(session()->has('successmessage'))
+												<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
+													<strong>Opps ! </strong>{{ session()->get('successmessage') }}
+												</div>
+											@endif
 											<div class="detail-info">
 												<h2 class="title-detail">{{$productdetail->name}}</h2>
 												<div class="product-code">
@@ -31,14 +62,35 @@
 													<label>Quantity Left : </label> <span>{{$productdetail->quantity}}</span>
 												</div>
 												<div class="info-price info-price-detail">
-													<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span>
+													<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span><br>
+													<label>The Latest Bidder is "{{$bidder}}"</label>
 												</div>
 												<div class="attr-info">
 													<a class="addcart-link" href="{!! url('user/orderform/'.$productdetail->id)!!}"><i class="fa fa-shopping-cart"></i> Order</a>
 													<a class="addcart-link" href="{!! url('user/addtowishlist/'.$productdetail->id)!!}"><i class="fa fa-heart-o"></i> Add To WishList</a>
-
-												</div>
-												<!-- End Attr Info -->
+												</div><br>
+												@if(session()->has('failmessage'))
+													<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
+														<strong>Opps ! </strong>{{ session()->get('failmessage') }}
+													</div>
+												@endif
+												@if (count($errors) > 0)
+													<div class="alert alert-danger">
+														<ul>
+															@foreach ($errors->all() as $error)
+																<li>{{ $error }}</li>
+															@endforeach
+														</ul>
+													</div>
+												@endif
+												<form class="form" method="post" action="{!! url('user/postbid/'.$productdetail->id)!!}">
+													{{ csrf_field() }}
+													<p>Your BID must be higher than the current amount</p>
+													<p><input type="text" name="bidamount" placeholder="Add The Bid"/></p>
+													<p><input type="hidden" name="route" value="{{Request::url()}}"></p>
+													<a href="{!! url('user/postbid/'.$productdetail->id)!!}"><Button>BID</Button></a>
+												</form>
+															<!-- End Attr Info -->
 											</div>
 											<!-- Detail Info -->
 										</div>

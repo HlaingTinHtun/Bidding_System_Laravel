@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bid extends Model
 {
     //
-    protected $table = "products";
+    protected $table = "bid";
 
     protected $fillable = ['id','amount','bidded_at','product_id','slug','bidder_id','created_at','updated_at'];
 
@@ -17,7 +17,7 @@ class Bid extends Model
      */
     public function product()
     {
-        return $this->hasOne('App\Product', 'product_id');
+        return $this->hasOne('App\Product', 'id');
     }
 
     public function user_Bidder()

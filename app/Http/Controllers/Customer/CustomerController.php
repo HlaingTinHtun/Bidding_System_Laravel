@@ -10,6 +10,7 @@ use App\Orderdetail;
 use App\Product;
 use App\User;
 use App\WishList;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -54,13 +55,20 @@ class CustomerController extends Controller
     {
 
         $productdetail = Product::find(Product::whereSlug($slug)->firstOrFail()->id);
+
         $relatedpros = Product::where('cat_id',$productdetail->cat_id)->paginate(5);
 
         $bidderid = $productdetail->buyer_id;
 
         $bidder = User::find($bidderid)->name;
 
-        return view('customers.detail',compact('productdetail','relatedpros','bidder'));
+        if ($productdetail->end_date < Carbon::now()){
+            $expiredDate = 'It Has Been Expired';
+        }else{
+            $expiredDate = null;
+        }
+
+        return view('customers.detail',compact('productdetail','relatedpros','bidder','expiredDate'));
     }
 
     public function addToWishList(Request $request)

@@ -54,6 +54,18 @@
 												</div>
 											@endif
 											<div class="detail-info">
+												@if (empty($expiredDate))
+													{{--{{'available'}}--}}
+													<div class="info-price info-price-detail">
+														<h2>Product Will Be Expired In</h2><span id="countdown"></span>
+													</div><br>
+												@else
+													{{--{{'Sold Out'}}--}}
+													<div class="info-price info-price-detail">
+														<span id="countdown"></span>
+													</div><br>
+												@endif
+
 												<h2 class="title-detail">{{$productdetail->name}}</h2>
 												<div class="product-code">
 													<label>Description : </label> <span>{{$productdetail->descr}}</span>
@@ -61,10 +73,20 @@
 												<div class="product-stock">
 													<label>Quantity Left : </label> <span>{{$productdetail->quantity}}</span>
 												</div>
-												<div class="info-price info-price-detail">
-													<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span><br>
-													<label>The Latest Bidder is "{{$bidder}}"</label>
-												</div>
+												@if (empty($expiredDate))
+													{{--{{'available'}}--}}
+														<div class="info-price info-price-detail">
+															<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span><br>
+															<label>The Latest Bidder is "{{$bidder}}"</label>
+														</div>
+												@else
+													{{--{{'Sold Out'}}--}}
+														<div class="info-price info-price-detail">
+															<label>Price:</label> <span>{{$productdetail->initialprice}}Ks</span><br>
+															<h3>The Winner is "{{$bidder}}"</h3>
+														</div>
+												@endif
+
 												<div class="attr-info">
 													<a class="addcart-link" href="{!! url('user/orderform/'.$productdetail->id)!!}"><i class="fa fa-shopping-cart"></i> Order</a>
 													<a class="addcart-link" href="{!! url('user/addtowishlist/'.$productdetail->id)!!}"><i class="fa fa-heart-o"></i> Add To WishList</a>
@@ -163,4 +185,34 @@
 		<!-- End Content Shop -->
 	</div>
 	<!-- End Content -->
+	<script>
+		// Set the date we're counting down to
+		var countDownDate = new Date('<?php echo $productdetail->end_date; ?>').getTime();
+
+		// Update the count down every 1 second
+		var x = setInterval(function() {
+
+			// Get todays date and time
+			var now = new Date().getTime();
+
+			// Find the distance between now an the count down date
+			var distance = countDownDate - now;
+
+			// Time calculations for days, hours, minutes and seconds
+			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			// Output the result in an element with id="demo"
+			document.getElementById("countdown").innerHTML = days + "D " + hours + "H "
+					+ minutes + "M " + seconds + "s ";
+
+			// If the count down is over, write some text
+			if (distance < 0) {
+				clearInterval(x);
+				document.getElementById("countdown").innerHTML = "Product Has Been Sold Out";
+			}
+		}, 1000);
+	</script>
 @endsection
